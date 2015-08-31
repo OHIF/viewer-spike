@@ -1,0 +1,20 @@
+<template name="layout">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://www.ohif.org">OHIF Viewer</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form">
+                    <div class="form-group">
+                        {{> loginButtons align="right"}}
+                    </div>
+                </form>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        {{> yield}}
+    </div>
+</template>
