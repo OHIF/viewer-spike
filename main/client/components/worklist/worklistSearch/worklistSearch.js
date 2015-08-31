@@ -10,11 +10,19 @@ Template.worklistSearch.onRendered(function() {
   $('#inputAccessionNumber').val(Session.get('worklistAccessionNumberFilter'));
 });
 
+function getFilter(name) {
+  var filter = Session.get(name);
+  if(filter && filter.length && filter.substr(filter.length - 1) !== '*') {
+    filter += '*';
+  }
+  return filter;
+}
+
 function search() {
   var filter = {
-    patientName: Session.get('worklistPatientNameFilter'),
-    patientId: Session.get('worklistPatientIdFilter'),
-    accessionNumber: Session.get('worklistAccessionNumberFilter'),
+    patientName: getFilter('worklistPatientNameFilter'),
+    patientId: getFilter('worklistPatientIdFilter'),
+    accessionNumber: getFilter('worklistAccessionNumberFilter'),
     //studyDate:
   };
 
