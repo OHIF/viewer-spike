@@ -25,13 +25,15 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
     }
 
     var sopInstanceUid = DICOMWeb.getString(instance['00080018']);
-    var uri = server.wadoUriRoot + '?requestType=WADO&studyUID=' + studyInstanceUid + '&seriesUID=' + seriesInstanceUid + '&objectUID=' + sopInstanceUid + "&contentType=application%2Fdicom";
+    var wadouri = server.wadoUriRoot + '?requestType=WADO&studyUID=' + studyInstanceUid + '&seriesUID=' + seriesInstanceUid + '&objectUID=' + sopInstanceUid + "&contentType=application%2Fdicom";
+    var wadorsuri = server.wadoRoot + '/studies/' + studyInstanceUid + '/series/' + seriesInstanceUid + '/instances/' + sopInstanceUid + '/frames/1';
 
     series.instances.push({
       imageType: DICOMWeb.getString(instance['00080008']),
       sopClassUid: DICOMWeb.getString(instance['00080016']),
       sopInstanceUid: sopInstanceUid,
-      uri: uri,
+      wadouri: wadouri,
+      wadorsuri: wadorsuri,
       instanceNumber: DICOMWeb.getNumber(instance['00200013']),
       imagePositionPatient: DICOMWeb.getString(instance['00200032']),
       imageOrientationPatient: DICOMWeb.getString(instance['00200037']),
@@ -40,7 +42,7 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
       samplesPerPixel: DICOMWeb.getNumber(instance['00280002']),
       photometricInterpretation: DICOMWeb.getString(instance['00280004']),
       rows: DICOMWeb.getNumber(instance['00280010']),
-      columns: DICOMWeb.getNumber(instance['00200052']),
+      columns: DICOMWeb.getNumber(instance['00280011']),
       pixelSpacing: DICOMWeb.getString(instance['00280030']),
       bitsAllocated: DICOMWeb.getNumber(instance['00280100']),
       bitsStored: DICOMWeb.getNumber(instance['00280101']),
@@ -50,7 +52,6 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
       windowWidth: DICOMWeb.getString(instance['00281051']),
       rescaleIntercept: DICOMWeb.getNumber(instance['00281052']),
       rescaleSlope: DICOMWeb.getNumber(instance['00281053']),
-
     });
   });
   return seriesList;

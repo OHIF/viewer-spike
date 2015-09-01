@@ -18,17 +18,13 @@ Router.route('/viewer/:_id', {
   name: 'viewer',
   onBeforeAction: function() {
     var self = this;
-    Meteor.call('GetStudyMetadata', this.params._id, function(error, result) {
-      console.log(result);
-      result.seriesList.sort(function(a,b) {
-        return a.seriesNumber - b.seriesNumber;
-      });
-      result.seriesList.forEach(function(series){
-        series.instances.sort(function(a,b) {
-          return a.instanceNumber - b.instanceNumber;
-        });
-      });
-      Session.set('metadata', result);
+    Meteor.call('GetStudyMetadata', this.params._id, function(error, study) {
+      console.log(study);
+      sortStudy(study);
+
+      var studies = [study];
+      Session.set('studies', studies);
+
       self.render('viewer');
     });
   }
