@@ -5,5 +5,6 @@ DICOMWeb.getString = function(element, defaultValue) {
   if(!element.Value.length) {
     return defaultValue;
   }
-  return element.Value[0].toString();
+  // NOTE: Orthanc does not split values into an array
+  return element.Value.join('\\');
 };

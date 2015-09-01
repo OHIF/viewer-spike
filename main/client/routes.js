@@ -20,6 +20,14 @@ Router.route('/viewer/:_id', {
     var self = this;
     Meteor.call('GetStudyMetadata', this.params._id, function(error, result) {
       console.log(result);
+      result.seriesList.sort(function(a,b) {
+        return a.seriesNumber - b.seriesNumber;
+      });
+      result.seriesList.forEach(function(series){
+        series.instances.sort(function(a,b) {
+          return a.instanceNumber - b.instanceNumber;
+        });
+      });
       Session.set('metadata', result);
       self.render('viewer');
     });
