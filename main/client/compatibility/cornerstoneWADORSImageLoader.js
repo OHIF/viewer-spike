@@ -41,7 +41,7 @@ cornerstone.registerImageLoader('wadors', function(imageId) {
   var deferred = $.Deferred();
 
   DICOMWeb.getImageFrame(image.uri).then(function(result) {
-    console.log(result);
+    //console.log(result);
     // TODO: decode compressed pixel data
     var storedPixelData;
     if(image.instance.bitsAllocated === 16) {
@@ -62,7 +62,7 @@ cornerstone.registerImageLoader('wadors', function(imageId) {
     image.getPixelData = function() {
       return storedPixelData;
     };
-    console.log(image);
+    //console.log(image);
     deferred.resolve(image);
   }).catch(function(reason) {
     deferred.reject(reason);

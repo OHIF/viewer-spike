@@ -25,15 +25,11 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
     }
 
     var sopInstanceUid = DICOMWeb.getString(instance['00080018']);
-    var wadouri = server.wadoUriRoot + '?requestType=WADO&studyUID=' + studyInstanceUid + '&seriesUID=' + seriesInstanceUid + '&objectUID=' + sopInstanceUid + "&contentType=application%2Fdicom";
-    var wadorsuri = server.wadoRoot + '/studies/' + studyInstanceUid + '/series/' + seriesInstanceUid + '/instances/' + sopInstanceUid + '/frames/1';
 
-    series.instances.push({
+    var instance = {
       imageType: DICOMWeb.getString(instance['00080008']),
       sopClassUid: DICOMWeb.getString(instance['00080016']),
       sopInstanceUid: sopInstanceUid,
-      wadouri: wadouri,
-      wadorsuri: wadorsuri,
       instanceNumber: DICOMWeb.getNumber(instance['00200013']),
       imagePositionPatient: DICOMWeb.getString(instance['00200032']),
       imageOrientationPatient: DICOMWeb.getString(instance['00200037']),
@@ -52,7 +48,15 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
       windowWidth: DICOMWeb.getString(instance['00281051']),
       rescaleIntercept: DICOMWeb.getNumber(instance['00281052']),
       rescaleSlope: DICOMWeb.getNumber(instance['00281053']),
-    });
+    };
+
+    if(server.imageRendering === 'wadouri') {
+      instance.wadouri = server.wadoUriRoot + '?requestType=WADO&studyUID=' + studyInstanceUid + '&seriesUID=' + seriesInstanceUid + '&objectUID=' + sopInstanceUid + "&contentType=application%2Fdicom";
+    } else {
+      instance.wadorsuri = server.wadoRoot + '/studies/' + studyInstanceUid + '/series/' + seriesInstanceUid + '/instances/' + sopInstanceUid + '/frames/1';
+    }
+
+    series.instances.push(instance);
   });
   return seriesList;
 }

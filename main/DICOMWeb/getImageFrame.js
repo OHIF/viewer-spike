@@ -1,5 +1,4 @@
 DICOMWeb.getImageFrame = function(uri, callback) {
-  console.log('getImageFrame');
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = "arraybuffer";
@@ -11,23 +10,21 @@ DICOMWeb.getImageFrame = function(uri, callback) {
         if (xhr.status === 200) {
           // request succeeded, create an image object and resolve the deferred
 
-          // Parse the DICOM File
+          // Parse the multi-part mime response
           var imageFrameAsArrayBuffer = xhr.response;
           var response = new Uint8Array(xhr.response);
-          var header = '';
-          var length = 0;
-          for(var offset = 0; offset < response.length; offset++) {
-            header += String.fromCharCode(response[offset]);
-            var index = header.indexOf('Content-Type: application/octet-stream');
-            if(index > 0) {
-              var split = header.split('\n');
-              var boundary = split[0]
-              length = response.length - offset - boundary.length;
-              console.log(boundary);
-              break;
-            }
-          }
-          //var offset = 64;
+          var tokenIndex = findIndexOfString(response, '\n\r\n');
+          //console.log('tokenIndex=',tokenIndex);
+          var header = uint8ArrayToString(response, 0, tokenIndex);
+          //console.log('header.length=', header.length);
+          var split = header.split('\r\n');
+          //console.log(split);
+          var boundary = split[0];
+          //console.log('boundary=', boundary);
+          var offset = tokenIndex + 4;
+          //console.log('offset', offset);
+          var endIndex = findIndexOfString(response, boundary, offset);
+          var length = endIndex - offset - 1;
           resolve({
             arrayBuffer: imageFrameAsArrayBuffer,
             offset: offset,

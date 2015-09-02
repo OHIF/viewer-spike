@@ -1,7 +1,7 @@
 # viewer-spike
 This repository is used to spike the OHIF viewer based on Orthanc, meteor and cornerstone
 
-## starting with medken's orthanc server (NOTE: currently does not display images)
+## starting with medken's orthanc server 
 
 > cd main
 

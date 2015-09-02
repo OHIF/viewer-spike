@@ -1,4 +1,3 @@
-
 {
   "dicomWeb" : {
     "endpoints": [
@@ -9,6 +8,7 @@
         "qidoRoot": "http://dicom-orthanc.medken.com/dicom-web",
         "wadoRoot": "http://dicom-orthanc.medken.com/dicom-web",
         "qidoSupportsIncludeField": false,
+        "imageRendering" : "wadouri",
         "requestOptions" : {
           "logRequests" : false,
           "logResponses" : false,

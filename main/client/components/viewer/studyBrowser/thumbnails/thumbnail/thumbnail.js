@@ -1,3 +1,11 @@
+function getImageId(instance) {
+  if(instance.wadouri) {
+    return 'dicomweb:' + instance.wadouri; // WADO-URI
+  } else {
+    return getWADORSImageId(instance); // WADO-RS Retrieve Frame
+  }
+}
+
 
 
 Template.thumbnail.onRendered(function() {
@@ -7,8 +15,7 @@ Template.thumbnail.onRendered(function() {
   //console.log(element);
   cornerstone.enable(element);
 
-  //var imageId = getWADORSImageId(instance); // WADO-RS Retrieve Frame
-  var imageId = 'dicomweb:' + instance.wadouri; // WADO-URI
+  var imageId = getImageId(instance);
 
   cornerstone.loadAndCacheImage(imageId).then(function(image) {
     console.log(image);

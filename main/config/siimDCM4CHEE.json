@@ -7,6 +7,7 @@
         "qidoRoot": "http://vna.hackathon.siim.org/dcm4chee-arc/qido/DCM4CHEE",
         "wadoRoot": "http://vna.hackathon.siim.org/dcm4chee-arc/wado/DCM4CHEE",
         "qidoSupportsIncludeField": true,
+        "imageRendering" : "wadouri",
         "requestOptions" : {
           "logRequests" : false,
           "logResponses" : false,
