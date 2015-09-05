@@ -40,9 +40,11 @@ cornerstone.registerImageLoader('wadors', function(imageId) {
 
   var deferred = $.Deferred();
 
-  DICOMWeb.getImageFrame(image.uri).then(function(result) {
-    //console.log(result);
-    // TODO: decode compressed pixel data
+  var mediaType;// = 'image/dicom+jp2';
+
+  DICOMWeb.getImageFrame(image.uri, mediaType).then(function(result) {
+    console.log(result);
+    // TODO: add support for retrieving compressed pixel data
     var storedPixelData;
     if(image.instance.bitsAllocated === 16) {
       if(image.instance.pixelRepresentation === 0) {
@@ -53,6 +55,8 @@ cornerstone.registerImageLoader('wadors', function(imageId) {
     } else if(image.instance.bitsAllocated === 8) {
       storedPixelData = new Uint8Array(result.arrayBuffer, result.offset, result.length);
     }
+
+    // TODO: handle various color space conversions
 
     var minMax = getMinMax(storedPixelData);
     image.imageId = imageId;
