@@ -2,6 +2,9 @@
 This repository is used to spike the OHIF viewer based on Orthanc, meteor and cornerstone.  It is also being tested
 against SIIM's DCM4CHEE instance which is based on an April 2015 build
 
+## pre-requisites
+Install [Meteor](https://www.meteor.com/)
+
 ## starting with medken's orthanc server
 
 > cd main
@@ -13,6 +16,12 @@ against SIIM's DCM4CHEE instance which is based on an April 2015 build
 > cd main
 
 > bin/siimDCM4CHEE.sh
+
+## starting with Medical Connections Public Server (unverified)
+
+> cd main
+
+> bin/medicalConnections.sh
 
 after server has started, open web browser to localhost:3000
 
