@@ -1,15 +1,26 @@
+/**
+ * Returns the Alphabetic version of a PN
+ *
+ * @param element - The group/element of the element (e.g. '00200013')
+ * @param [defaultValue] - The default value to return if the element is not found
+ * @returns {*}
+ */
 DICOMWeb.getName = function(element, defaultValue) {
   if(!element) {
     return defaultValue;
   }
+  // Value is not present if the attribute has a zero length value
+  if(!element.Value) {
+    return defaultValue;
+  }
+  // Sanity check to make sure we have at least one entry in the array.
   if(!element.Value.length) {
     return defaultValue;
   }
-  // DCM4CHEE returns the name as Alphabetic
+  // Return the Alphabetic component group
   if(element.Value[0].Alphabetic) {
     return element.Value[0].Alphabetic;
   }
-  // Orthanc does not return the nae as Alphabetic which is probably a bug so we have
-  // this workaround
+  // Orthanc does not return PN properly so this is a temporary workaround
   return element.Value[0];
 };
