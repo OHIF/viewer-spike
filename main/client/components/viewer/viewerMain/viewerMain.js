@@ -1,7 +1,6 @@
-Template.studyBrowser.helpers({
+Template.viewerMain.helpers({
   studies : function() {
     var studies = Session.get('studies');
-    //console.log(studies);
     return studies;
   }
 });

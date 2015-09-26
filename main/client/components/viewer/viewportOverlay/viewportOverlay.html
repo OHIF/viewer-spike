@@ -1,0 +1,26 @@
+<template name="viewportOverlay">
+    <div class="imageViewerViewportOverlay noselect">
+        <div class="topleft dicomTag">
+            <div>{{patientName}}</div>
+            <div>{{mrno}}</div>
+            <div>{{studyDate}} {{studyTime}}</div>
+            <div class='priorIndicator'>{{prior}}</div>
+        </div>
+        <div class="topright dicomTag">
+            <div>{{sliceLocation}}</div>
+            <div>{{sliceThickness}}</div>
+        </div>
+        <div class="bottomright dicomTag">
+            <div>Zoom: {{zoom}}%</div>
+            <div>{{compression}}</div>
+            <div>{{wwwc}}</div>
+        </div>
+        <div class="bottomleft dicomTag">
+            <div>Ser: {{seriesNumber}}</div>
+            <div>Img: {{imageNumber}}</div>
+            <div>{{frameRate}}</div>
+            <div>{{imageDimensions}}</div>
+            <div>{{seriesDescription}}</div>
+        </div>
+    </div>
+</template>

@@ -12,3 +12,5 @@ twbs:bootstrap
 http
 arsnebula:reactive-promise
 promise
+stylus
+fortawesome:fontawesome

@@ -31,7 +31,7 @@ function search() {
     console.log(studies);
     studies.forEach(function(study) {
       Studies.insert(study);
-    })
+    });
   });
 
 }
