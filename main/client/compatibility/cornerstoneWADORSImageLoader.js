@@ -10,7 +10,7 @@ cornerstoneWADORSImageLoader.addImage = function(image) {
   cornerstoneWADORSImageLoader.internal.imageIds[index] = image;
   var imageId = 'wadors:' + index;
   return imageId;
-}
+};
 
 function getMinMax(storedPixelData)
 {

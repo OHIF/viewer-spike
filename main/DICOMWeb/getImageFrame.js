@@ -41,7 +41,7 @@ DICOMWeb.getImageFrame = function(uri, mediaType) {
           var split = header.split('\r\n');
           var boundary = findBoundary(split);
           if(!boundary) {
-            reject('invalid response - no boundary marker')
+            reject('invalid response - no boundary marker');
           }
           var offset = tokenIndex + 4; // skip over the \n\r\n
 

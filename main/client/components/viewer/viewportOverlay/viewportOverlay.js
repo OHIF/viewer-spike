@@ -1,4 +1,4 @@
-function getElementIfNotEmpty(imageThumbnailIndex) {
+function getElementIfNotEmpty(viewportIndex) {
     // Meteor template helpers run more often than expected
     // They often seem to run just before the whole template is rendered
     // This meant that the onRendered event hadn't fired yet, so the
@@ -7,8 +7,8 @@ function getElementIfNotEmpty(imageThumbnailIndex) {
     // 'undefined' errors from the helper functions
 
     var imageViewerViewports = $('.imageViewerViewport'),
-        element = imageViewerViewports.get(imageThumbnailIndex),
-        canvases = imageViewerViewports.eq(imageThumbnailIndex).find('canvas');
+        element = imageViewerViewports.get(viewportIndex),
+        canvases = imageViewerViewports.eq(viewportIndex).find('canvas');
 
     if (!element || $(element).hasClass("empty") || canvases.length === 0) {
         return;
@@ -24,7 +24,7 @@ function getElementIfNotEmpty(imageThumbnailIndex) {
 }
 
 function getPatient(property) {
-    Session.get('CornerstoneNewImage' + this.imageThumbnailIndex);
+    Session.get('CornerstoneNewImage' + this.viewportIndex);
     if (!this.imageId) {
         return false;
     }
@@ -36,7 +36,7 @@ function getPatient(property) {
 }
 
 function getStudy(property) {
-    Session.get('CornerstoneNewImage' + this.imageThumbnailIndex);
+    Session.get('CornerstoneNewImage' + this.viewportIndex);
     if (!this.imageId) {
         return false;
     }
@@ -48,7 +48,7 @@ function getStudy(property) {
 }
 
 function getSeries(property) {
-    Session.get('CornerstoneNewImage' + this.imageThumbnailIndex);
+    Session.get('CornerstoneNewImage' + this.viewportIndex);
     if (!this.imageId) {
         return false;
     }
@@ -60,7 +60,7 @@ function getSeries(property) {
 }
 
 function getInstance(property) {
-    Session.get('CornerstoneNewImage' + this.imageThumbnailIndex);
+    Session.get('CornerstoneNewImage' + this.viewportIndex);
     if (!this.imageId) {
         return false;
     }
@@ -71,8 +71,8 @@ function getInstance(property) {
     return instance[property];
 }
 
-function getImage(imageThumbnailIndex) {
-    var element = getElementIfNotEmpty(imageThumbnailIndex);
+function getImage(viewportIndex) {
+    var element = getElementIfNotEmpty(viewportIndex);
     if (!element) {
         return false;
     }
@@ -90,8 +90,8 @@ function getImage(imageThumbnailIndex) {
 
 Template.viewportOverlay.helpers({
     wwwc: function() {
-        Session.get('CornerstoneImageRendered');
-        var element = getElementIfNotEmpty(this.imageThumbnailIndex);
+        Session.get('CornerstoneImageRendered' + this.viewportIndex);
+        var element = getElementIfNotEmpty(this.viewportIndex);
         if (!element) {
             return '';
         }
@@ -102,8 +102,8 @@ Template.viewportOverlay.helpers({
         return 'W ' + viewport.voi.windowWidth.toFixed(0) + ' L ' + viewport.voi.windowCenter.toFixed(0);
     },
     zoom: function() {
-        Session.get('CornerstoneImageRendered');
-        var element = getElementIfNotEmpty(this.imageThumbnailIndex);
+        Session.get('CornerstoneImageRendered' + this.viewportIndex);
+        var element = getElementIfNotEmpty(this.viewportIndex);
         if (!element) {
             return '';
         }
@@ -114,9 +114,9 @@ Template.viewportOverlay.helpers({
         return (viewport.scale * 100.0);
     },
     imageDimensions: function() {
-        Session.get('CornerstoneNewImage' + this.imageThumbnailIndex);
+        Session.get('CornerstoneNewImage' + this.viewportIndex);
 
-        var image = getImage(this.imageThumbnailIndex);
+        var image = getImage(this.viewportIndex);
         if (!image) {
            return '';
         }

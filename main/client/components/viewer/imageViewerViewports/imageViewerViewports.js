@@ -20,7 +20,10 @@ Template.imageViewerViewports.helpers({
 
     var array = [];
     for (var i=0; i < numViewports; ++i) {
-        array.push(i);
+        var data = {
+            viewportIndex: i
+        };
+        array.push(data);
     }
     return array;
   }

@@ -26,7 +26,7 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
 
     var sopInstanceUid = DICOMWeb.getString(instance['00080018']);
 
-    var instance = {
+    var instanceSummary = {
       imageType: DICOMWeb.getString(instance['00080008']),
       sopClassUid: DICOMWeb.getString(instance['00080016']),
       sopInstanceUid: sopInstanceUid,
@@ -51,12 +51,12 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
     };
 
     if(server.imageRendering === 'wadouri') {
-      instance.wadouri = server.wadoUriRoot + '?requestType=WADO&studyUID=' + studyInstanceUid + '&seriesUID=' + seriesInstanceUid + '&objectUID=' + sopInstanceUid + "&contentType=application%2Fdicom";
+      instanceSummary.wadouri = server.wadoUriRoot + '?requestType=WADO&studyUID=' + studyInstanceUid + '&seriesUID=' + seriesInstanceUid + '&objectUID=' + sopInstanceUid + "&contentType=application%2Fdicom";
     } else {
-      instance.wadorsuri = server.wadoRoot + '/studies/' + studyInstanceUid + '/series/' + seriesInstanceUid + '/instances/' + sopInstanceUid + '/frames/1';
+      instanceSummary.wadorsuri = server.wadoRoot + '/studies/' + studyInstanceUid + '/series/' + seriesInstanceUid + '/instances/' + sopInstanceUid + '/frames/1';
     }
 
-    series.instances.push(instance);
+    series.instances.push(instanceSummary);
   });
   return seriesList;
 }

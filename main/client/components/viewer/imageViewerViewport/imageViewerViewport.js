@@ -5,11 +5,13 @@ function loadSeriesIntoViewport(data) {
 
     var series = data.series;
     var element = data.viewport;
+    var viewportIndex = $(".imageViewerViewport").index(data.viewport);
 
     var imageIds = [];
     series.instances.forEach(function(instance) {
         var imageId = getImageId(instance);
         imageIds.push(imageId);
+        addMetaData(imageId, instance);
     });
 
     var stack = {
@@ -20,10 +22,16 @@ function loadSeriesIntoViewport(data) {
     cornerstone.enable(element);
     cornerstone.loadAndCacheImage(imageIds[stack.currentImageIdIndex]).then(function(image) {
         cornerstone.displayImage(element, image);
+        
+        cornerstone.resize(element, true);
 
         var imagePlane = cornerstoneTools.metaData.get('imagePlane', image.imageId);
 
         cornerstoneTools.addStackStateManager(element, [ 'stack', 'playClip', 'referenceLines' ]);
+
+        // Enable orientation markers, if applicable
+        var viewport = cornerstone.getViewport(element);
+        updateOrientationMarkers(element, viewport);
 
         // Clear any old stack data
         cornerstoneTools.clearToolState(element, 'stack');
@@ -38,6 +46,22 @@ function loadSeriesIntoViewport(data) {
         toolManager.setActiveTool(activeTool);
 
         cornerstoneTools.magnify.enable(element);
+
+        function onImageRendered(e, eventData) {
+            Session.set('CornerstoneImageRendered' + viewportIndex, Random.id());
+        }
+
+        $(element).off('CornerstoneImageRendered', onImageRendered);
+        $(element).on('CornerstoneImageRendered', onImageRendered);
+        Session.set('CornerstoneImageRendered' + viewportIndex, Random.id());
+
+        function onNewImage(e, eventData) {
+            Session.set('CornerstoneNewImage' + viewportIndex, Random.id());
+        }
+
+        $(element).off('CornerstoneNewImage', onNewImage);
+        $(element).on('CornerstoneNewImage', onNewImage);
+        Session.set('CornerstoneNewImage' + viewportIndex, Random.id());
     });
 }
 
@@ -46,6 +70,8 @@ Template.imageViewerViewport.onRendered(function() {
     var studies = Session.get('studies');
     var viewport = this.find(".imageViewerViewport");
     var viewportIndex = $(".imageViewerViewport").index(viewport);
+
+    this.data.viewportIndex = viewportIndex;
 
     var data = {
         viewport: viewport
@@ -68,7 +94,6 @@ Template.imageViewerViewport.onRendered(function() {
             }
             return true;
         });
-        console.log(data);
     } else {
         var stacks = [];
         studies.forEach(function(study) {
