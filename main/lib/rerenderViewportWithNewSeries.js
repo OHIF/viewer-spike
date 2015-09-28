@@ -7,7 +7,7 @@
  * @param data An object containing a seriesIndex and studyIndex for a study to load into this viewport
  */
 rerenderViewportWithNewSeries = function(element, data) {
-    var container = $(element).parents('.viewportContainer').get(0)
+    var container = $(element).parents('.viewportContainer').get(0);
     var viewportIndex = $(container).index();
     data.viewportIndex = viewportIndex;
 

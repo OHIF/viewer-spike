@@ -200,6 +200,12 @@ function thumbnailDragEndHandler(e, target) {
     return false;
 }
 
+Template.thumbnailEntry.onRendered(function() {
+    var entry = this.find('.thumbnailEntry');
+    $(entry).data('seriesInstanceUid', Template.parentData(0).seriesInstanceUid);
+    $(entry).data('studyInstanceUid', Template.parentData(1).studyInstanceUid);
+});
+
 Template.thumbnailEntry.events({
     // Touch drag/drop events
     'touchstart .thumbnailEntry, mousedown .thumbnailEntry': function(e) {
