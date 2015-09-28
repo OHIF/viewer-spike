@@ -30,3 +30,7 @@ after server has started, open web browser to localhost:3000
 Set the imageRendering property in the dicomWeb endpoint to 'wadors'.  Note that this should work for grayscale images
 but hasn't been verfied yet (DCM4CHEE is returning invalid pixel data).  Support for color and compressed transfer
 syntaxes has not been implemented yet.
+
+## Notes
+
+- This repository is currently using the Experimental Cornerstone WebGL Renderer. If you encounter any odd behaviour, you can disable this renderer in client/components/viewer/imageViewerViewport/imageViewerViewport.js.

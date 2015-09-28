@@ -19,7 +19,11 @@ function loadSeriesIntoViewport(data) {
         imageIds: imageIds
     };
 
-    cornerstone.enable(element);
+    // NOTE: This uses the experimental WebGL renderer for Cornerstone!
+    cornerstone.enable(element, cornerstone.webGL.renderer.render);
+    // If you have problems, replace it with this line instead:
+    // cornerstone.enable(element);
+
     cornerstone.loadAndCacheImage(imageIds[stack.currentImageIdIndex]).then(function(image) {
         cornerstone.displayImage(element, image);
         

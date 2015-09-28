@@ -10,6 +10,16 @@ var tools = {};
 
 var initialized = false;
 
+function configureTools() {
+    // Set the configuration for the multitouch pan tool
+    var multiTouchPanConfig = {
+        testPointers: function(eventData) {
+            return (eventData.numPointers >= 3);
+        }
+    };
+    cornerstoneTools.panMultiTouch.setConfiguration(multiTouchPanConfig);
+}
+
 toolManager = {
     init: function() {
         toolManager.addTool('wwwc', {
@@ -61,6 +71,8 @@ toolManager = {
             touch: cornerstoneTools.arrowAnnotateTouch
         });
         activeTool = OHIF.viewer.defaultTool;
+
+        configureTools();
         initialized = true;
     },
     addTool: function(name, base) {

@@ -27,8 +27,8 @@ function resizeViewports() {
     }, 1);
 }
 
-Session.setDefault('viewportRows', 2);
-Session.setDefault('viewportColumns', 2);
+Session.setDefault('viewportRows', 1);
+Session.setDefault('viewportColumns', 1);
 
 height = Math.min(window.outerHeight, window.innerHeight);
 width = Math.min(window.outerWidth, window.innerWidth);
@@ -55,6 +55,9 @@ Template.viewer.onRendered(function() {
         height: height,
         width: width
     });
+
+    document.body.style.overflow = "hidden";
+    document.body.style.minWidth = 0;
 });
 
 Meteor.startup(function () {
