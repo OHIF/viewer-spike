@@ -2,13 +2,12 @@
     <div class="imageViewerViewportOverlay noselect">
         <div class="topleft dicomTag">
             <div>{{patientName}}</div>
-            <div>{{mrno}}</div>
-            <div>{{studyDate}} {{studyTime}}</div>
-            <div class='priorIndicator'>{{prior}}</div>
+            <div>{{patientId}}</div>
+            <div></div>
         </div>
         <div class="topright dicomTag">
-            <div>{{sliceLocation}}</div>
-            <div>{{sliceThickness}}</div>
+            <div>{{studyDescription}}</div>
+            <div>{{studyDate}} {{studyTime}}</div>
         </div>
         <div class="bottomright dicomTag">
             <div>Zoom: {{formatNumberPrecision zoom 2}}%</div>
@@ -17,7 +16,7 @@
         </div>
         <div class="bottomleft dicomTag">
             <div>Ser: {{seriesNumber}}</div>
-            <div>Img: {{imageNumber}}</div>
+            <div>Img: {{imageNumber}} ({{imageIndex}}/{{numImages}})</div>
             <div>{{frameRate}}</div>
             <div>{{imageDimensions}}</div>
             <div>{{seriesDescription}}</div>

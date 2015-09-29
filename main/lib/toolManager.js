@@ -109,9 +109,6 @@ toolManager = {
                 cornerstoneTools.zoomWheel.deactivate(element);
                 cornerstoneTools.stackScrollWheel.deactivate(element);
 
-                // Reactivate the middle mouse and right click tools
-                cornerstoneTools.zoom.activate(element, 4); // zoom is the default tool for right mouse button
-
                 // Reactivate the relevant scrollwheel tool for this element
                 if (imageIds.length > 1) {
                     // scroll is the default tool for middle mouse wheel for stacks
@@ -124,14 +121,19 @@ toolManager = {
                 // This block ensures that the middle mouse and scroll tools keep working
                 if (tool === 'pan') {
                     cornerstoneTools.pan.activate(element, 3); // 3 means left mouse button and middle mouse button
-                    tools[tool].touch.activate(element);
-                } else {
+                    cornerstoneTools.zoom.activate(element, 4); // zoom is the default tool for right mouse button
+                } else if (tool === 'zoom') {
                     cornerstoneTools.pan.activate(element, 2); // pan is the default tool for middle mouse button
+                    cornerstoneTools.zoom.activate(element, 5); // 5 means left mouse button and right mouse button
+                } else {
+                    // Reactivate the middle mouse and right click tools
+                    cornerstoneTools.pan.activate(element, 2); // pan is the default tool for middle mouse button
+                    cornerstoneTools.zoom.activate(element, 4); // zoom is the default tool for right mouse button
 
                     // Activate the chosen tool
                     tools[tool].mouse.activate(element, 1);
-                    tools[tool].touch.activate(element);
                 }
+                tools[tool].touch.activate(element);
 
                 cornerstoneTools.zoomTouchPinch.activate(element);
                 cornerstoneTools.panMultiTouch.activate(element);

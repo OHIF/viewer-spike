@@ -125,11 +125,17 @@ Template.viewportOverlay.helpers({
     patientName : function() {
         return getPatient.call(this, 'name');
     },
+    patientId : function() {
+        return getPatient.call(this, 'id');
+    },
     studyDate : function() {
         return getStudy.call(this, 'date');
     },
     studyTime : function() {
         return getStudy.call(this, 'time');
+    },
+    studyDescription : function() {
+        return getStudy.call(this, 'description');
     },
     seriesDescription : function() {
         return getSeries.call(this, 'description');
@@ -140,4 +146,10 @@ Template.viewportOverlay.helpers({
     imageNumber : function() {
         return getInstance.call(this, 'number');
     },
+    imageIndex : function() {
+        return getInstance.call(this, 'index');
+    },
+    numImages : function() {
+        return getSeries.call(this, 'numImages');
+    }
 });

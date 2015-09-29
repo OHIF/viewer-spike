@@ -2266,7 +2266,7 @@ if(typeof cornerstone === 'undefined'){
     function getImageTexture( image ) {
         var imageTexture = cornerstone.webGL.textureCache.getImageTexture(image.imageId);
         if (!imageTexture) {
-            console.log("Generating texture for imageid: ", image.imageId);
+            //console.log("Generating texture for imageid: ", image.imageId);
             imageTexture = generateTexture(image);
             cornerstone.webGL.textureCache.putImageTexture(image, imageTexture);
         }

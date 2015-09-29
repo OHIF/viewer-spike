@@ -5,7 +5,17 @@ Meteor.startup(function() {
             var viewport = cornerstone.getViewport(element);
             viewport.invert = !viewport.invert;
             cornerstone.setViewport(element, viewport);
+        },
+        playClip: function(element) {
+            cornerstoneTools.playClip(element);
+        },
+        stopClip: function(element) {
+            cornerstoneTools.stopClip(element);
         }
+    };
+
+    OHIF.viewer.tooltipConfig = {
+        trigger: 'hover'
     };
 });
 
@@ -28,7 +38,20 @@ Template.toolRow.events({
             return;
         }
 
-        var element = getActiveViewportElement();
-        OHIF.viewer.functionList[command](element);
+        // TODO = Add support for active viewports
+        //var element = getActiveViewportElement();
+        $('.imageViewerViewport').each(function() {
+            var element = this;
+            OHIF.viewer.functionList[command](element);
+        });
     }
+});
+
+Template.toolRow.onRendered(function() {
+    var tooltipButtons = $('[data-toggle="tooltip"]');
+    tooltipButtons.tooltip(OHIF.viewer.tooltipConfig);
+
+    // Enable tooltips for the layout button
+    var extraTooltipButtons = $('[rel="tooltip"]');
+    extraTooltipButtons.tooltip(OHIF.viewer.tooltipConfig);
 });

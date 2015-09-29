@@ -49,7 +49,7 @@ Services.QIDO.Instances = function(server, studyInstanceUid) {
   var url = buildUrl(server, studyInstanceUid);
 
   var result = DICOMWeb.getJSON(url, server.requestOptions);
-
+  
   var study = {
     wadoUriRoot: server.wadoUriRoot,
     studyInstanceUid: studyInstanceUid,
