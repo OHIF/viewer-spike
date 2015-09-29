@@ -2,19 +2,30 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="http://www.ohif.org">OHIF Viewer</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">OHIF Viewer</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                <form class="navbar-form">
-                    <div class="form-group">
-                        {{> loginButtons align="right"}}
-                    </div>
-                </form>
-            </ul>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="http://www.ohif.org">About</a>
+                    </li>
+                    <li>
+                        <form class="navbar-form">
+                            <div class="form-group">
+                                {{> loginButtons align="right"}}
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container">
-        {{> yield}}
-    </div>
+    {{> yield}}
 </template>

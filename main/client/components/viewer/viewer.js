@@ -1,6 +1,6 @@
 function resizeViewer() {
     console.log('Resizing viewer');
-    var height = Math.min(window.outerHeight, window.innerHeight);
+    var height = Math.min(window.outerHeight, window.innerHeight) - 50;
     var width = Math.min(window.outerWidth, window.innerWidth);
 
     Session.set('viewerHeight', height);
@@ -30,7 +30,7 @@ function resizeViewports() {
 Session.setDefault('viewportRows', 1);
 Session.setDefault('viewportColumns', 1);
 
-height = Math.min(window.outerHeight, window.innerHeight);
+height = Math.min(window.outerHeight, window.innerHeight) - 50;
 width = Math.min(window.outerWidth, window.innerWidth);
 Session.setDefault('viewerHeight', height);
 Session.setDefault('viewerWidth', width);
@@ -51,13 +51,28 @@ Template.viewer.onRendered(function() {
     var height = Session.get('viewerHeight');
     var width = Session.get('viewerWidth');
 
-    $("#viewer").css({
+    var imageViewer = $("#viewer");
+    imageViewer.css({
         height: height,
         width: width
     });
 
     document.body.style.overflow = "hidden";
     document.body.style.minWidth = 0;
+
+    if (imageViewer) {
+        $('.navbar-default').css({
+            'background-color': '#000000',
+            'border-color': '#101010'
+        });
+    }
+});
+
+Template.viewer.onDestroyed(function() {
+    $('.navbar-default').css({
+        'background-color': '#f8f8f8',
+        'border-color': '#e7e7e7'
+    });
 });
 
 Meteor.startup(function () {

@@ -14,7 +14,7 @@ Router.route('/', function () {
 ViewerStudies = new Mongo.Collection(null);
 
 Router.route('/viewer/:_id', {
-  layoutTemplate: '',
+  layoutTemplate: 'layout',
   name: 'viewer',
   onBeforeAction: function() {
     var self = this;
