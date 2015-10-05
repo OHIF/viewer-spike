@@ -4,7 +4,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
 accounts-password
 ian:accounts-ui-bootstrap-3
 iron:router
@@ -15,3 +14,17 @@ promise
 stylus
 fortawesome:fontawesome
 mrt:moment
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check

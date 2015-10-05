@@ -1,7 +1,7 @@
 function resizeViewer() {
     console.log('Resizing viewer');
-    var height = Math.min(window.outerHeight, window.innerHeight) - 50;
-    var width = Math.min(window.outerWidth, window.innerWidth);
+    var height = $(window).height() - 50;
+    var width = $(window).width();
 
     Session.set('viewerHeight', height);
     Session.set('viewerWidth', width);

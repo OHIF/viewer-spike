@@ -14,9 +14,15 @@ Meteor.startup(function() {
         }
     };
 
-    OHIF.viewer.tooltipConfig = {
-        trigger: 'hover'
-    };
+    if (isTouchDevice()) {
+        OHIF.viewer.tooltipConfig = {
+            trigger: 'manual'
+        };
+    } else {
+        OHIF.viewer.tooltipConfig = {
+            trigger: 'hover'
+        };
+    }
 });
 
 Template.toolRow.helpers({
