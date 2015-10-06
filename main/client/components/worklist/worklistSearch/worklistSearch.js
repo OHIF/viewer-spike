@@ -1,5 +1,5 @@
 if(!Session.get('worklistPatientNameFilter')) {
-  Session.set('worklistPatientNameFilter', 'SIIM^Joe');
+  Session.set('worklistPatientNameFilter', '');
 }
 
 search();
@@ -29,6 +29,9 @@ function search() {
   Studies.remove({});
   Meteor.call('WorklistSearch', filter, function(error, studies) {
     console.log(studies);
+    if (!studies) {
+      return;
+    }
     studies.forEach(function(study) {
       Studies.insert(study);
     });

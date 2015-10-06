@@ -1,1 +1,4 @@
 .idea
+main/config/node_modules
+etc/nodeCORSProxy.js
+etc/node_modules
