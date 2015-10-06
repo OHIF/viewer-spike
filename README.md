@@ -34,23 +34,22 @@ You must have the following installed:
 
 ### Instructions
 1. **Start Orthanc in Docker:** Open a terminal Tab/window. Run the docker container for Orthanc with all plugins enabled (may need sudo, depending on OS):
-````
-docker run -p 4242:4242 -p 8042:8042 --rm jodogne/orthanc-plugins
-````
+    ````
+    docker run -p 4242:4242 -p 8042:8042 --rm jodogne/orthanc-plugins
+    ````
 
 2. **Start the proxy for Orthanc:** Open a new Terminal tab/window. Go to /main and run
-````
-cd etc
-./setupLocalOrthanc.sh
-````
-
+    ````
+    cd etc
+    ./setupLocalOrthanc.sh
+    ````
     This does three things. First, it checks the docker machine's IP. Next, it updates the /etc/nodeCORSProxy.js file to proxy this IP. Finally, it starts the proxy server with node.
 
 3. **Start Meteor:** Open another Terminal tab/window to start the Meteor server
-````
-cd main
-./bin/localhostOrthanc.sh
-````
+    ````
+    cd main
+    ./bin/localhostOrthanc.sh
+    ````
 
 ### Usage
 - **To see images** use the OHIF Viewer at http://localhost:3000
