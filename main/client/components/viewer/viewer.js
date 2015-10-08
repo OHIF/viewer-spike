@@ -1,16 +1,40 @@
-function resizeViewer() {
-    console.log('Resizing viewer');
-    var height = $(window).height() - 50;
-    var width = $(window).width();
+OHIF = {
+    viewer: {}
+};
 
-    Session.set('viewerHeight', height);
-    Session.set('viewerWidth', width);
-    
-    $("#viewer").css({
-        height: height,
-        width: width
-    });
-}
+OHIF.viewer.imageViewerLoadedSeriesDictionary = {};
+OHIF.viewer.imageViewerCurrentImageIdIndexDictionary = {};
+OHIF.viewer.loadIndicatorDelay = 3000;
+OHIF.viewer.defaultTool = 'wwwc';
+OHIF.viewer.refLinesEnabled = true;
+
+Meteor.startup(function() {
+    OHIF.viewer.updateImageSynchronizer = new cornerstoneTools.Synchronizer("CornerstoneNewImage", cornerstoneTools.updateImageSynchronizer);
+    OHIF.viewer.functionList = {
+        invert: function(element) {
+            var viewport = cornerstone.getViewport(element);
+            viewport.invert = !viewport.invert;
+            cornerstone.setViewport(element, viewport);
+        },
+        playClip: function(element) {
+            cornerstoneTools.playClip(element);
+        },
+        stopClip: function(element) {
+            cornerstoneTools.stopClip(element);
+        }
+    };
+
+
+    if (isTouchDevice()) {
+        OHIF.viewer.tooltipConfig = {
+            trigger: 'manual'
+        };
+    } else {
+        OHIF.viewer.tooltipConfig = {
+            trigger: 'hover'
+        };
+    }
+})
 
 function resizeViewports() {
     // Handle resizing of image viewer viewports
@@ -20,20 +44,16 @@ function resizeViewports() {
         var elements = $('.imageViewerViewport');
         elements.each(function(index) {
             var element = this;
-            if (element) {
-                cornerstone.resize(element, true);
+            if (!element) {
+                return;
             }
+            cornerstone.resize(element, true);
         });
     }, 1);
 }
 
 Session.setDefault('viewportRows', 1);
 Session.setDefault('viewportColumns', 1);
-
-height = Math.min(window.outerHeight, window.innerHeight) - 50;
-width = Math.min(window.outerWidth, window.innerWidth);
-Session.setDefault('viewerHeight', height);
-Session.setDefault('viewerWidth', width);
 
 // Avoid doing DOM manipulation during the resize handler
 // because it is fired very often.
@@ -42,39 +62,21 @@ var resizeTimer;
 $(window).on('resize', function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function() {
-        resizeViewer();
         resizeViewports();
     }, 100);
 });
 
 Template.viewer.onRendered(function() {
-    var height = Session.get('viewerHeight');
-    var width = Session.get('viewerWidth');
-
     var imageViewer = $("#viewer");
-    imageViewer.css({
-        height: height,
-        width: width
-    });
-
-    document.body.style.overflow = "hidden";
-    document.body.style.minWidth = 0;
-
     if (imageViewer) {
         $('.navbar-default').css({
             'background-color': '#000000',
             'border-color': '#101010'
         });
+        document.body.style.overflow = "hidden";
+        document.body.style.height = '100%';
+        document.body.style.width = '100%';
+        document.body.style.minWidth = 0;
+        document.body.style.position = 'fixed'; // Prevent overscroll on mobile devices
     }
-});
-
-Template.viewer.onDestroyed(function() {
-    $('.navbar-default').css({
-        'background-color': '#f8f8f8',
-        'border-color': '#e7e7e7'
-    });
-});
-
-Meteor.startup(function () {
-    $(window).trigger('resize');
 });

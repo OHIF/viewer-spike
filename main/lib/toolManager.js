@@ -1,9 +1,3 @@
-var OHIF = OHIF || {
-    viewer: {
-        defaultTool: 'wwwc'
-    }
-};
-
 var activeTool;
 
 var tools = {};

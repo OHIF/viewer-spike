@@ -1,11 +1,3 @@
-Meteor.startup(function(){
-    OHIF = window.OHIF || {};
-    OHIF.viewer = {
-        imageViewerLoadedSeriesDictionary: {},
-        imageViewerCurrentImageIdIndexDictionary: {}
-    };
-});
-
 function cloneElement(element, targetId) {
     // Clone the DOM element
     var clone = element.cloneNode(true);

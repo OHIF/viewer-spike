@@ -23,6 +23,18 @@ function enablePrefetchOnElement(element) {
     }
 }
 
+function displayReferenceLines() {
+    console.log("Changing reference line display");
+    var activeViewportIndex = Session.get('ActiveViewport');
+    $('.imageViewerViewport').each(function(viewportIndex, element) {
+        if (viewportIndex === activeViewportIndex) {
+            cornerstoneTools.referenceLines.tool.disable(element);
+            return;
+        }
+        cornerstoneTools.referenceLines.tool.enable(element, OHIF.viewer.updateImageSynchronizer);
+    });
+}
+
 function loadSeriesIntoViewport(data) {
     if (!data.series || !data.viewport) {
         return;
@@ -35,6 +47,7 @@ function loadSeriesIntoViewport(data) {
 
     var allEvents = 'CornerstoneToolsMouseDown CornerstoneToolsMouseDownActivate ' +
         'CornerstoneToolsTap CornerstoneToolsTouchPress ' +
+        'CornerstoneToolsTouchStart CornerstoneToolsTouchStartActive ' +
         'CornerstoneToolsDragStartActive CornerstoneToolsMultiTouchDragStart';
 
     var imageIds = [];
@@ -131,6 +144,12 @@ function loadSeriesIntoViewport(data) {
         $(element).on(allEvents, sendActivationTrigger);
 
         Session.set('CornerstoneNewImage' + viewportIndex, Random.id());
+
+        if (OHIF.viewer.refLinesEnabled && imagePlane && imagePlane.frameOfReferenceUID) {
+            OHIF.viewer.updateImageSynchronizer.add(element);
+        }
+
+        //displayReferenceLines();
     });
 }
 
@@ -190,5 +209,6 @@ Template.imageViewerViewport.events({
     'ActivateViewport .imageViewerViewport': function(e) {
         Session.set('ActiveViewport', e.viewportIndex);
         enablePrefetchOnElement(e.currentTarget);
+        //displayReferenceLines();
     },
 });

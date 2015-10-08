@@ -1,30 +1,3 @@
-Meteor.startup(function() {
-    var OHIF = window.OHIF || {};
-    OHIF.viewer.functionList = {
-        invert: function(element) {
-            var viewport = cornerstone.getViewport(element);
-            viewport.invert = !viewport.invert;
-            cornerstone.setViewport(element, viewport);
-        },
-        playClip: function(element) {
-            cornerstoneTools.playClip(element);
-        },
-        stopClip: function(element) {
-            cornerstoneTools.stopClip(element);
-        }
-    };
-
-    if (isTouchDevice()) {
-        OHIF.viewer.tooltipConfig = {
-            trigger: 'manual'
-        };
-    } else {
-        OHIF.viewer.tooltipConfig = {
-            trigger: 'hover'
-        };
-    }
-});
-
 Template.toolRow.helpers({
   studies : function() {
     var studies = Session.get('studies');
