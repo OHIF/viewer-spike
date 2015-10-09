@@ -54,9 +54,9 @@ addMetaData = function(imageId, data) {
             frameOfReferenceUID: instanceMetaData.frameOfReferenceUID,
             rows: instanceMetaData.rows,
             columns: instanceMetaData.columns,
-            rowCosines: new cornerstoneMath.Vector3(imageOrientation[0], imageOrientation[1], imageOrientation[2]),
-            columnCosines: new cornerstoneMath.Vector3(imageOrientation[3], imageOrientation[4], imageOrientation[5]),
-            imagePositionPatient: new cornerstoneMath.Vector3(imagePosition[0], imagePosition[1], imagePosition[2]),
+            rowCosines: new cornerstoneMath.Vector3(parseFloat(imageOrientation[0]), parseFloat(imageOrientation[1]), parseFloat(imageOrientation[2])),
+            columnCosines: new cornerstoneMath.Vector3(parseFloat(imageOrientation[3]), parseFloat(imageOrientation[4]), parseFloat(imageOrientation[5])),
+            imagePositionPatient: new cornerstoneMath.Vector3(parseFloat(imagePosition[0]), parseFloat(imagePosition[1]), parseFloat(imagePosition[2])),
             rowPixelSpacing: rowPixelSpacing,
             columnPixelSpacing: columnPixelSpacing,
         };

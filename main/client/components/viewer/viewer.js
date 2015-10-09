@@ -7,6 +7,7 @@ OHIF.viewer.imageViewerCurrentImageIdIndexDictionary = {};
 OHIF.viewer.loadIndicatorDelay = 3000;
 OHIF.viewer.defaultTool = 'wwwc';
 OHIF.viewer.refLinesEnabled = true;
+OHIF.viewer.isPlaying = {};
 
 Meteor.startup(function() {
     OHIF.viewer.updateImageSynchronizer = new cornerstoneTools.Synchronizer("CornerstoneNewImage", cornerstoneTools.updateImageSynchronizer);
@@ -17,10 +18,15 @@ Meteor.startup(function() {
             cornerstone.setViewport(element, viewport);
         },
         playClip: function(element) {
-            cornerstoneTools.playClip(element);
-        },
-        stopClip: function(element) {
-            cornerstoneTools.stopClip(element);
+            var viewportIndex = $('.imageViewerViewport').index(element);
+            var isPlaying = OHIF.viewer.isPlaying[viewportIndex] || false;
+            if (isPlaying === true) {
+                cornerstoneTools.stopClip(element);
+            } else {
+                cornerstoneTools.playClip(element);
+            }
+            OHIF.viewer.isPlaying[viewportIndex] = !OHIF.viewer.isPlaying[viewportIndex];
+            Session.set('UpdateCINE', Random.id());
         }
     };
 
@@ -34,7 +40,7 @@ Meteor.startup(function() {
             trigger: 'hover'
         };
     }
-})
+});
 
 function resizeViewports() {
     // Handle resizing of image viewer viewports
@@ -52,6 +58,7 @@ function resizeViewports() {
     }, 1);
 }
 
+Session.setDefault('ActiveViewport', 0);
 Session.setDefault('viewportRows', 1);
 Session.setDefault('viewportColumns', 1);
 

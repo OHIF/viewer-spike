@@ -5,7 +5,6 @@ DICOMWeb.getJSON = function(url, options) {
     },
   };
 
-  console.log(options);
   if (options.auth) {
     getOptions.auth = options.auth;
   }

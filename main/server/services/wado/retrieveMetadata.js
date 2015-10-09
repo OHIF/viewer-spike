@@ -9,7 +9,6 @@ function resultDataToStudyMetadata(server, studyInstanceUid, resultData) {
   var seriesMap = {};
   var seriesList = [];
   resultData.forEach(function(instance) {
-    //console.log(instance);
     var seriesInstanceUid = DICOMWeb.getString(instance['0020000E']);
     var series = seriesMap[seriesInstanceUid];
     if(!series) {

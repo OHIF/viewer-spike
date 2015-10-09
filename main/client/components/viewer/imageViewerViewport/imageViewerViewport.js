@@ -5,7 +5,9 @@
  *
  * @param element
  */
-function enablePrefetchOnElement(element) {
+function enablePrefetchOnElement() {
+    var viewportIndex = Session.get('ActiveViewport');
+    var element = $('.imageViewerViewport').get(viewportIndex);
     console.log('Enabling prefetch on new element');
 
     // Loop through all viewports and disable stackPrefetch
@@ -25,9 +27,15 @@ function enablePrefetchOnElement(element) {
 
 function displayReferenceLines() {
     console.log("Changing reference line display");
-    var activeViewportIndex = Session.get('ActiveViewport');
-    $('.imageViewerViewport').each(function(viewportIndex, element) {
-        if (viewportIndex === activeViewportIndex) {
+    var viewportIndex = Session.get('ActiveViewport');
+    var element = $('.imageViewerViewport').get(viewportIndex);
+
+    $('.imageViewerViewport').each(function(index, element) {
+        if (!$(this).find('canvas').length) {
+            return;
+        }
+
+        if (index === viewportIndex) {
             cornerstoneTools.referenceLines.tool.disable(element);
             return;
         }
@@ -46,7 +54,8 @@ function loadSeriesIntoViewport(data) {
     var viewportIndex = $(".imageViewerViewport").index(data.viewport);
 
     var allEvents = 'CornerstoneToolsMouseDown CornerstoneToolsMouseDownActivate ' +
-        'CornerstoneToolsTap CornerstoneToolsTouchPress ' +
+        'CornerstoneToolsMouseClick CornerstoneToolsMouseDrag CornerstoneToolsMouseUp ' +
+        'CornerstoneToolsMouseWheel CornerstoneToolsTap CornerstoneToolsTouchPress ' +
         'CornerstoneToolsTouchStart CornerstoneToolsTouchStartActive ' +
         'CornerstoneToolsDragStartActive CornerstoneToolsMultiTouchDragStart';
 
@@ -148,8 +157,9 @@ function loadSeriesIntoViewport(data) {
         if (OHIF.viewer.refLinesEnabled && imagePlane && imagePlane.frameOfReferenceUID) {
             OHIF.viewer.updateImageSynchronizer.add(element);
         }
-
-        //displayReferenceLines();
+        
+        enablePrefetchOnElement();
+        displayReferenceLines();
     });
 }
 
@@ -205,10 +215,16 @@ Template.imageViewerViewport.onRendered(function() {
     loadSeriesIntoViewport(data);
 });
 
+Template.imageViewerViewport.onDestroyed(function() {
+    var element = this.find(".imageViewerViewport");
+    cornerstone.disable(element);
+});
+
 Template.imageViewerViewport.events({
     'ActivateViewport .imageViewerViewport': function(e) {
+        console.log('ActivateViewport: ' + e.viewportIndex);
         Session.set('ActiveViewport', e.viewportIndex);
-        enablePrefetchOnElement(e.currentTarget);
-        //displayReferenceLines();
+        enablePrefetchOnElement();
+        displayReferenceLines();
     },
 });

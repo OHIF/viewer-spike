@@ -22,9 +22,13 @@
             <!-- Rectangle ROI -->
             <button id="rectangleRoi" type="button" class="imageViewerTool btn btn-sm btn-default" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Rectangle ROI"><span class="fa fa-square-o"></span></button>
             <!-- Play clip -->
-            <button id="playClip" type="button" class="imageViewerCommand btn btn-sm btn-default" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Play Clip"><span class="fa fa-play"></span></button>
-            <!-- Stop clip -->
-            <button id="stopClip" type="button" class="imageViewerCommand btn btn-sm btn-default" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Stop Clip"><span class="fa fa-stop"></span></button>
+            <button id="playClip" type="button" class="imageViewerCommand btn btn-sm btn-default" data-container="body" data-toggle="tooltip" data-placement="bottom" title="Play/Stop Clip">
+                {{ #if isPlaying }}
+                    <span class="fa fa-stop"></span>
+                {{ else }}
+                    <span class="fa fa-play"></span>
+                {{ /if }}
+            </button>
             <button id="layout" type="button" class="btn btn-sm btn-default dropdown-toggle" data-container="body" data-toggle="dropdown" aria-expanded="false" data-placement="right" title="Layout" rel="tooltip"><span class="fa fa-th-large"></span></button>
             {{> layoutChooser}}                    
         </div>

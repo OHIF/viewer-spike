@@ -19,7 +19,7 @@ Router.route('/viewer/:_id', {
   onBeforeAction: function() {
     var self = this;
     Meteor.call('GetStudyMetadata', this.params._id, function(error, study) {
-      console.log(study);
+      //console.log(study);
       sortStudy(study);
 
       var studies = [study];
